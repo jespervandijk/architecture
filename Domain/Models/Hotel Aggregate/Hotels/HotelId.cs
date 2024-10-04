@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class Booking
+public struct HotelId
 {
     
 }
