@@ -1,6 +1,6 @@
 ﻿namespace Domain.Abstractions;
 
-public class AggregateRoot
+public abstract class AggregateRoot
 {
     
 }

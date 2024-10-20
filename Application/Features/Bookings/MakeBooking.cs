@@ -5,8 +5,11 @@ using Domain.Models.Customers;
 using Domain.Models.Hotel_Aggregate.Rooms;
 using Marten;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 
-namespace API.Features.Bookings;
+namespace Application.Features.Bookings;
 
 
 public sealed class Endpoint : ICarterModule

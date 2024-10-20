@@ -1,4 +1,4 @@
-﻿namespace API.Features.Hotels;
+﻿namespace Application.Features.Hotels;
 
 public class AddHotel
 {

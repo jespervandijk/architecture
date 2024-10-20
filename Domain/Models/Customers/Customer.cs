@@ -1,9 +1,10 @@
-﻿using Domain.Models.Customers.Events;
+﻿using Domain.Abstractions;
+using Domain.Models.Customers.Events;
 using Qowaiv;
 
 namespace Domain.Models.Customers;
 
-public class Customer
+public class Customer : AggregateRoot
 {
     private Customer(CustomerId id, CustomerName name, EmailAddress emailAddress)
     {
@@ -16,11 +17,11 @@ public class Customer
     public CustomerName Name { get; set; }
     public EmailAddress EmailAddress { get; set; }
 
-    public void AddCustomer(CustomerId id, CustomerName name, EmailAddress emailAddress)
+    public static void AddCustomer(CustomerName name, EmailAddress emailAddress)
     {
         new CustomerAdded
         {
-            Id = id,
+            Id = CustomerId.Next(),
             Name = name,
             EmailAddress = emailAddress,
         };
