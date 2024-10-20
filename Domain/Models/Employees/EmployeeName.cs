@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities.Employees;
+﻿namespace Domain.Models.Employees;
 
 public struct EmployeeName : IEquatable<EmployeeName>, IFormattable
 {

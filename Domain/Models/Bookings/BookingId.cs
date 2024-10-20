@@ -1,8 +1,11 @@
-﻿namespace Domain.Models.Bookings;
+﻿using System.Diagnostics.CodeAnalysis;
+using Domain.Abstractions;
 
-public struct BookingId : IEquatable<BookingId>, IFormattable
+namespace Domain.Models.Bookings;
+
+public struct BookingId : IEntityId<BookingId>, IEntityIdStatic<BookingId>
 {
-    private Guid Value { get; }
+    public Guid Value { get; }
 
     public BookingId(Guid value)
     {
@@ -40,5 +43,17 @@ public struct BookingId : IEquatable<BookingId>, IFormattable
     public override int GetHashCode()
     {
         return Value.GetHashCode();
+    }
+
+    public static BookingId Parse(string s, IFormatProvider? provider)
+    {
+        return new BookingId(Guid.Parse(s));
+    }
+
+    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out BookingId result)
+    {
+        var succes = Guid.TryParse(s, out var guid);
+        result = new BookingId(guid);
+        return succes;
     }
 }

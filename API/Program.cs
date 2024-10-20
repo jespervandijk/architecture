@@ -1,4 +1,5 @@
 using System.Reflection;
+using API.Extensions;
 using Carter;
 using Marten;
 using Weasel.Core;
@@ -10,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCarter();
+builder.Services.AddMediatR(config =>
+{
+    config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+});
 
 builder.Services.AddMarten(options =>
 {
@@ -21,6 +26,8 @@ builder.Services.AddMarten(options =>
     {
         options.AutoCreateSchemaObjects = AutoCreate.All;
     }
+
+    options.AddEventTypes();
 });
 
 var app = builder.Build();

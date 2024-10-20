@@ -1,7 +1,8 @@
 ﻿using System.Dynamic;
-using Domain.Entities;
 using Domain.Models.Bookings.Events;
 using Domain.Models.Customers;
+using Domain.Models.Hotel_Aggregate.Rooms;
+using FluentValidation;
 using Marten.Events.Aggregation;
 
 namespace Domain.Models.Bookings;
@@ -28,12 +29,28 @@ public class Booking : SingleStreamProjection<Booking>
     public DateOnly CheckOutDate { get; set; }
     public BookingStatus Status { get; set; }
 
-    public static void MakeBooking(CustomerId customerId, RoomId roomId, DateOnly checkInDate, DateOnly checkOutDate, BookingStatus status)
+    public static BookingMade MakeBooking(CustomerId customerId, RoomId roomId, DateOnly checkInDate, DateOnly checkOutDate, BookingStatus status)
     {
-        
+        return new BookingMade
+        {
+            Id = BookingId.Next(),
+            CustomerId = customerId,
+            RoomId = roomId,
+            CheckInDate = checkInDate,
+            CheckOutDate = checkOutDate,
+            Status = status,
+        };
     }
 
     public void Apply(BookingMade bookingMade)
     {
+    }
+}
+
+public class BookingValidator : AbstractValidator<Booking>
+{
+    public BookingValidator()
+    {
+        RuleFor(x => x.CustomerId).NotEmpty();
     }
 }

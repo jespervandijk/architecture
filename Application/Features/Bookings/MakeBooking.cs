@@ -1,8 +1,9 @@
 ﻿using API.Abstractions;
 using Carter;
-using Domain.Entities;
 using Domain.Models.Bookings;
 using Domain.Models.Customers;
+using Domain.Models.Hotel_Aggregate.Rooms;
+using Marten;
 using MediatR;
 
 namespace API.Features.Bookings;
@@ -32,6 +33,10 @@ public record MakeBooking : ICommand<BookingId>
 
 public class MakeBookingHandler : ICommandHandler<MakeBooking, BookingId>
 {
+    private readonly IDocumentStore _documentStore;
+    
+    
+    
     public Task<BookingId> Handle(MakeBooking request, CancellationToken cancellationToken)
     {
         // get object

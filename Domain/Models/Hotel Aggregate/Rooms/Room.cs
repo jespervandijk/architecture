@@ -1,6 +1,6 @@
 ﻿using Qowaiv.Financial;
 
-namespace Domain.Entities;
+namespace Domain.Models.Hotel_Aggregate.Rooms;
 
 public class Room
 {

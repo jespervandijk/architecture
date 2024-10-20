@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities.Customers;
+﻿namespace Domain.Models.Customers;
 
 public struct CustomerName : IEquatable<CustomerName>, IFormattable
 {
