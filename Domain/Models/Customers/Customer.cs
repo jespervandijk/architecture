@@ -4,26 +4,25 @@ using Qowaiv;
 
 namespace Domain.Models.Customers;
 
-public class Customer : AggregateRoot
+public class Customer : AggregateRoot<CustomerId>
 {
-    private Customer(CustomerId id, CustomerName name, EmailAddress emailAddress)
+    private Customer(CustomerName name, EmailAddress emailAddress) : base(CustomerId.Next())
     {
-        Id = id;
         Name = name;
         EmailAddress = emailAddress;
     }
-    
-    public CustomerId Id { get; set; }
     public CustomerName Name { get; set; }
     public EmailAddress EmailAddress { get; set; }
 
-    public static void AddCustomer(CustomerName name, EmailAddress emailAddress)
+    public static Customer CreateCustomer(CustomerName name, EmailAddress emailAddress)
     {
-        new CustomerAdded
+        var customer = new Customer(name, emailAddress);
+        customer.Changes.Add(new CustomerCreated
         {
-            Id = CustomerId.Next(),
+            Id = customer.Id,
             Name = name,
             EmailAddress = emailAddress,
-        };
+        });
+        return customer;
     }
 }

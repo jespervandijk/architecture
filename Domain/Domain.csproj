@@ -9,7 +9,6 @@
     <ItemGroup>
       <PackageReference Include="FluentValidation" Version="11.10.0" />
       <PackageReference Include="Marten" Version="7.29.0" />
-      <PackageReference Include="Qowaiv" Version="7.0.5" />
     </ItemGroup>
 
 </Project>

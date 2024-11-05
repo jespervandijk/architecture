@@ -1,4 +1,4 @@
-﻿using API.Abstractions;
+﻿using Application.Abstractions;
 using Carter;
 using Domain.Models.Bookings;
 using Domain.Models.Customers;

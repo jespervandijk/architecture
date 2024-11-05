@@ -1,4 +1,5 @@
-﻿using API.Abstractions;
+﻿using Application.Abstractions;
+using Application.Abstractions.Repositories;
 using Carter;
 using Domain.Models.Customers;
 using MediatR;
@@ -28,8 +29,16 @@ public record AddCustomer : ICommand<CustomerId>
 
 public sealed class AddCustomerHandler : ICommandHandler<AddCustomer, CustomerId>
 {
+    private readonly ICustomerRepository _customerRepository;
+
+    public AddCustomerHandler(ICustomerRepository customerRepository)
+    {
+        _customerRepository = customerRepository;
+    }
     public Task<CustomerId> Handle(AddCustomer request, CancellationToken cancellationToken)
     {
-        Customer.AddCustomer(request.Name, request.EmailAddress);
+        var customer = Customer.CreateCustomer(request.Name, request.EmailAddress);
+        _customerRepository.StartStream(customer, null);
+        return Task.FromResult(customer.Id);
     }
 }

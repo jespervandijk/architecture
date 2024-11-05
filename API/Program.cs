@@ -1,4 +1,5 @@
 using System.Reflection;
+using API.Configuration.JsonOptions;
 using API.Extensions;
 using Carter;
 using Marten;
@@ -9,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => options.AddSwaggerGenOptions());
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
 {
@@ -29,6 +30,8 @@ builder.Services.AddMarten(options =>
 
     options.AddEventTypes();
 });
+
+builder.Services.ConfigureHttpJsonOptions(options => options.AddConverters());
 
 var app = builder.Build();
 

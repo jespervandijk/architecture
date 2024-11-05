@@ -9,6 +9,7 @@
     <ItemGroup>
         <PackageReference Include="Carter" Version="8.2.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7"/>
+        <PackageReference Include="Scalar.AspNetCore" Version="1.2.30" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 

@@ -1,8 +1,9 @@
-﻿using Qowaiv;
+﻿using Domain.Abstractions;
+using Qowaiv;
 
 namespace Domain.Models.Customers.Events;
 
-public record CustomerAdded
+public record CustomerCreated : Event
 {
     public required CustomerId Id { get; init; }
     public required CustomerName Name { get; init; }
