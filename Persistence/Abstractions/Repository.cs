@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Repositories;
 using Domain.Abstractions;
 using Marten;
+using Microsoft.Extensions.Configuration;
 
 namespace Persistence.Abstractions;
 
@@ -9,20 +10,23 @@ public class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
     where TEntityId : IEntityId<TEntityId>
 {
     private readonly IDocumentStore _eventStore;
-
     public Repository(IDocumentStore eventStore)
     {
         _eventStore = eventStore;
     }
 
-    public void StartStream(TEntity aggregate, int? expectedVersion)
+    public async Task StartStream(TEntity aggregate, int? expectedVersion)
     {
-        _eventStore.LightweightSession().Events.StartStream<TEntity>(aggregate.Id.Value, aggregate.Changes);
+        await using var session = _eventStore.LightweightSession();
+        session.Events.StartStream<TEntity>(aggregate.Id.Value, aggregate.Changes);
+        await session.SaveChangesAsync();
     }
     
-    public void Save(TEntity aggregate, int? expectedVersion)
+    public async Task Save(TEntity aggregate, int? expectedVersion)
     {
-        _eventStore.LightweightSession().Events.Append(aggregate.Id.Value, aggregate.Changes);
+        await using var session = _eventStore.LightweightSession();
+        session.Events.Append(aggregate.Id.Value, aggregate.Changes);
+        await session.SaveChangesAsync();
     }
 
     public async Task<TEntity> GetById(Guid id)

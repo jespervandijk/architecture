@@ -39,6 +39,6 @@ public sealed class AddCustomerHandler : ICommandHandler<AddCustomer, CustomerId
     {
         var customer = Customer.CreateCustomer(request.Name, request.EmailAddress);
         _customerRepository.StartStream(customer, null);
-        return Task.FromResult(customer.Id);
+        return Task.FromResult(customer.Id ?? CustomerId.Empty);
     }
 }
