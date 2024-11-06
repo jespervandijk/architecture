@@ -3,6 +3,7 @@ using API.Configuration.JsonOptions;
 using API.Extensions;
 using Carter;
 using Marten;
+using Scalar.AspNetCore;
 using Weasel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,8 +39,18 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(options =>
+    {
+        // documentName becomes v1
+        options.RouteTemplate = "openapi/{documentName}.json";
+    });
+    app.MapScalarApiReference(options =>
+    {
+        options
+            .WithTitle("Vertical Slices Event Sourcing Example")
+            .WithTheme(ScalarTheme.DeepSpace)
+            .WithDefaultHttpClient(ScalarTarget.JavaScript, ScalarClient.Fetch);
+    });
 }
 
 app.UseHttpsRedirection();

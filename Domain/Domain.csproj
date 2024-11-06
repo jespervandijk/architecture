@@ -11,4 +11,8 @@
       <PackageReference Include="Marten" Version="7.29.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Models\GeneralValueObjects\" />
+    </ItemGroup>
+
 </Project>

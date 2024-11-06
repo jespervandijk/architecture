@@ -6,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Qowaiv;
 
 namespace Application.Features.Customers;
 
@@ -24,7 +23,7 @@ public sealed class Endpoint : ICarterModule
 public record AddCustomer : ICommand<CustomerId>
 {
     public required CustomerName Name { get; init; }
-    public required EmailAddress EmailAddress { get; init; }
+    public required CustomerEmailAddress EmailAddress { get; init; }
 }
 
 public sealed class AddCustomerHandler : ICommandHandler<AddCustomer, CustomerId>

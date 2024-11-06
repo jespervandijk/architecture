@@ -1,8 +1,7 @@
-﻿using Qowaiv.Financial;
-
-namespace Domain.Models.Hotel_Aggregate.Rooms;
+﻿namespace Domain.Models.Hotel_Aggregate.Rooms;
 
 public class Room
 {
-    public Money Price { get; set; }
+    // Todo create general value object for money
+    public int PriceInEuros { get; set; }
 }

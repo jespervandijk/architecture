@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Domain.Attributes;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
