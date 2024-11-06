@@ -1,5 +1,8 @@
-﻿namespace Domain.Models.Customers;
+﻿using Domain.Attributes;
 
+namespace Domain.Models.Customers;
+
+[OpenApiDataType(description: "Name of a customer", example: "Jantje", type: "string" )]
 public struct CustomerName : IEquatable<CustomerName>, IFormattable
 {
     private string Value { get; }

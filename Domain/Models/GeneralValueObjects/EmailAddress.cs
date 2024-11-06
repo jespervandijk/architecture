@@ -1,8 +1,16 @@
-﻿namespace Domain.Models.Customers;
+﻿using Domain.Attributes;
 
-public struct CustomerEmailAddress : IFormattable, IEquatable<CustomerEmailAddress>
+namespace Domain.Models.GeneralValueObjects;
+
+[OpenApiDataType(description: "Email Address", example: "test@test", type: "string" )]
+public struct EmailAddress : IFormattable, IEquatable<EmailAddress>
 {
     public string Value { get; }
+
+    public EmailAddress(string emailAddress)
+    {
+        Value = emailAddress;
+    }
 
     public string ToString(string? format, IFormatProvider? formatProvider)
     {
@@ -15,14 +23,14 @@ public struct CustomerEmailAddress : IFormattable, IEquatable<CustomerEmailAddre
         return $"{Value}";
     }
 
-    public bool Equals(CustomerEmailAddress other)
+    public bool Equals(EmailAddress other)
     {
         return Value == other.Value;
     }
 
     public override bool Equals(object? obj)
     {
-        return obj is CustomerEmailAddress other && Equals(other);
+        return obj is EmailAddress other && Equals(other);
     }
 
     public override int GetHashCode()

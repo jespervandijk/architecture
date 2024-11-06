@@ -2,6 +2,7 @@
 using Application.Abstractions.Repositories;
 using Carter;
 using Domain.Models.Customers;
+using Domain.Models.GeneralValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +24,7 @@ public sealed class Endpoint : ICarterModule
 public record AddCustomer : ICommand<CustomerId>
 {
     public required CustomerName Name { get; init; }
-    public required CustomerEmailAddress EmailAddress { get; init; }
+    public required EmailAddress EmailAddress { get; init; }
 }
 
 public sealed class AddCustomerHandler : ICommandHandler<AddCustomer, CustomerId>

@@ -1,19 +1,20 @@
 ﻿using Domain.Abstractions;
 using Domain.Models.Customers.Events;
+using Domain.Models.GeneralValueObjects;
 
 namespace Domain.Models.Customers;
 
 public class Customer : AggregateRoot<CustomerId>
 {
-    private Customer(CustomerName name, CustomerEmailAddress emailAddress) : base(CustomerId.Next())
+    private Customer(CustomerName name, EmailAddress emailAddress) : base(CustomerId.Next())
     {
         Name = name;
         EmailAddress = emailAddress;
     }
     public CustomerName Name { get; set; }
-    public CustomerEmailAddress EmailAddress { get; set; }
+    public EmailAddress EmailAddress { get; set; }
 
-    public static Customer CreateCustomer(CustomerName name, CustomerEmailAddress emailAddress)
+    public static Customer CreateCustomer(CustomerName name, EmailAddress emailAddress)
     {
         var customer = new Customer(name, emailAddress);
         customer.Changes.Add(new CustomerCreated
