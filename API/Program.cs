@@ -1,14 +1,22 @@
 using System.Reflection;
 using API.Configuration.JsonOptions;
 using API.Extensions;
+using Application;
 using Carter;
+using Infrastructure;
 using Marten;
+using Persistence;
 using Scalar.AspNetCore;
 using Weasel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddPersistence();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => options.AddSwaggerGenOptions());

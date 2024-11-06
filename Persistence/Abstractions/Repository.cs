@@ -2,7 +2,7 @@
 using Domain.Abstractions;
 using Marten;
 
-namespace Infrastructure.Abstractions;
+namespace Persistence.Abstractions;
 
 public class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
     where TEntity : AggregateRoot<TEntityId>

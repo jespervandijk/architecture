@@ -1,9 +1,9 @@
 ﻿using Application.Abstractions.Repositories;
 using Domain.Models.Customers;
-using Infrastructure.Abstractions;
 using Marten;
+using Persistence.Abstractions;
 
-namespace Infrastructure;
+namespace Persistence;
 
 public class CustomerRepository : Repository<Customer, CustomerId>, ICustomerRepository
 {
