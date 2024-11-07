@@ -5,9 +5,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace Persistence.Abstractions;
 
-public class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
-    where TEntity : AggregateRoot<TEntityId>
-    where TEntityId : IEntityId<TEntityId>
+public class Repository<TEntity> : IRepository<TEntity>
+    where TEntity : AggregateRoot
 {
     private readonly IDocumentStore _eventStore;
     public Repository(IDocumentStore eventStore)
@@ -18,14 +17,14 @@ public class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId>
     public async Task StartStream(TEntity aggregate, int? expectedVersion)
     {
         await using var session = _eventStore.LightweightSession();
-        session.Events.StartStream<TEntity>(aggregate.Id.Value, aggregate.Changes);
+        session.Events.StartStream<TEntity>(aggregate.StreamId, aggregate.Changes);
         await session.SaveChangesAsync();
     }
     
     public async Task Save(TEntity aggregate, int? expectedVersion)
     {
         await using var session = _eventStore.LightweightSession();
-        session.Events.Append(aggregate.Id.Value, aggregate.Changes);
+        session.Events.Append(aggregate.StreamId, aggregate.Changes);
         await session.SaveChangesAsync();
     }
 

@@ -1,5 +1,6 @@
-﻿using API.Configuration.JsonOptions;
+﻿using API.JsonConverters;
 using Domain.Models.Bookings.Events;
+using Domain.Models.Customers;
 using Domain.Models.Customers.Events;
 using Marten;
 using Marten.Events.Projections;
@@ -12,13 +13,12 @@ public static class MartenDbOptionsExtensions
 {
     public static StoreOptions AddEventTypes(this StoreOptions options)
     {
-        options.Events.AddEventType<BookingMade>();
         options.Events.AddEventType<CustomerCreated>();
-
+        
         options.Projections.Add<CustomerProjection>(ProjectionLifecycle.Inline);
-
+        
         options.UseSystemTextJsonForSerialization(enumStorage: EnumStorage.AsString,
-            configure: settings => settings.Converters.Add(new CustomerNameJsonConverter()));
+            configure: settings => settings.Converters.AddConverters());
 
         return options;
     }

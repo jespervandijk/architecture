@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using Domain.Models.Customers;
 
-namespace API.Configuration.JsonOptions;
+namespace API.JsonConverters;
 
 public class CustomerNameJsonConverter : JsonConverter<CustomerName>
 {

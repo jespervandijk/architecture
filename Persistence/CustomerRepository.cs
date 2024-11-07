@@ -5,7 +5,7 @@ using Persistence.Abstractions;
 
 namespace Persistence;
 
-public class CustomerRepository : Repository<Customer, CustomerId>, ICustomerRepository
+public class CustomerRepository : Repository<Customer>, ICustomerRepository
 {
     public CustomerRepository(IDocumentStore eventStore) : base(eventStore)
     {

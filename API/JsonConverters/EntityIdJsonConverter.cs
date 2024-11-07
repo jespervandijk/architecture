@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using Domain.Abstractions;
 
-namespace API.Configuration.JsonOptions;
+namespace API.JsonConverters;
 
 public class EntityIdJsonConverter<TEntityId> : JsonConverter<TEntityId>
     where TEntityId : struct, IEntityId<TEntityId>
@@ -11,7 +11,7 @@ public class EntityIdJsonConverter<TEntityId> : JsonConverter<TEntityId>
     {
         var value = reader.GetString();
         if (value is null) throw new JsonException();
-        return (TEntityId)Activator.CreateInstance(typeof(TEntityId), Guid.Parse(value));
+        return (TEntityId)Activator.CreateInstance(typeof(TEntityId), Guid.Parse(value))!;
     }
 
     public override void Write(Utf8JsonWriter writer, TEntityId value, JsonSerializerOptions options)

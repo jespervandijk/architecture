@@ -1,9 +1,8 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Domain.Models.Customers;
 using Domain.Models.GeneralValueObjects;
 
-namespace API.Configuration.JsonOptions;
+namespace API.JsonConverters;
 
 public class CustomerEmailJsonConverter : JsonConverter<EmailAddress>
 {

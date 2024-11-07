@@ -2,6 +2,6 @@
 
 namespace Application.Abstractions.Repositories;
 
-public interface ICustomerRepository : IRepository<Customer, CustomerId>
+public interface ICustomerRepository : IRepository<Customer>
 {
 }

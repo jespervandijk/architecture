@@ -27,7 +27,7 @@ public sealed class Endpoint : ICarterModule
 
 public record MakeBooking : ICommand<BookingId>
 {
-    public CustomerId CustomerId { get; init; }
+    public required CustomerId CustomerId { get; init; }
     public RoomId RoomId { get; init; }
     public DateOnly CheckInDate { get; init; }
     public DateOnly CheckOutDate { get; init; }

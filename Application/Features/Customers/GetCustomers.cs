@@ -33,7 +33,8 @@ public class GetCustomersQueryHandler : IQueryHandler<GetCustomersQuery, List<Cu
 
     public async Task<List<Customer>> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
     {
-        await using var session = _eventStore.QuerySession();
-        return session.Query<Customer>().ToList();
+        await using var session = _eventStore.LightweightSession();
+        var customers = await session.Query<Customer>().ToListAsync();
+        return customers.ToList();
     }
 }

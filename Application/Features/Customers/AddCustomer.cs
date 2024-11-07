@@ -14,20 +14,20 @@ public sealed class Endpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("customers", async (AddCustomer command, ISender sender) =>
+        app.MapPost("customers", async (AddCustomer command, ISender sender) =>
         {
             return Results.Ok(await sender.Send(command));
         });
     }
 }
 
-public record AddCustomer : ICommand<CustomerId>
+public record AddCustomer : ICommand<Guid>
 {
-    public required CustomerName Name { get; init; }
-    public required EmailAddress EmailAddress { get; init; }
+    public required CustomerName Name { get; set; }
+    public required EmailAddress EmailAddress { get; set; }
 }
 
-public sealed class AddCustomerHandler : ICommandHandler<AddCustomer, CustomerId>
+public sealed class AddCustomerHandler : ICommandHandler<AddCustomer, Guid>
 {
     private readonly ICustomerRepository _customerRepository;
 
@@ -35,10 +35,10 @@ public sealed class AddCustomerHandler : ICommandHandler<AddCustomer, CustomerId
     {
         _customerRepository = customerRepository;
     }
-    public Task<CustomerId> Handle(AddCustomer request, CancellationToken cancellationToken)
+    public Task<Guid> Handle(AddCustomer request, CancellationToken cancellationToken)
     {
         var customer = Customer.CreateCustomer(request.Name, request.EmailAddress);
         _customerRepository.StartStream(customer, null);
-        return Task.FromResult(customer.Id ?? CustomerId.Empty);
+        return Task.FromResult(customer.Id.Value);
     }
 }
